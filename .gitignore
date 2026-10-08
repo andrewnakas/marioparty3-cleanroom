@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.z64
+*.n64
+*.v64
+*.zip
+baserom*
+games/marioparty/native/*.pdb
+games/marioparty/native/*.lib
+__pycache__/
+games/marioparty/voices/_raw/

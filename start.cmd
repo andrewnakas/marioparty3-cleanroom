@@ -1,0 +1,3 @@
+@echo off
+cd /d D:\n64work\marioparty3-cleanroom
+"C:\Users\andre\.local\bin\claude.exe" --permission-mode auto "/loop Clean-room Mario Party 3, following CLAUDE.md and docs/DECOMP_PLAYBOOK.md. The ROM path and decomp links are in CLAUDE.md. Goal: a web build that needs NO ROM from the player, every retail asset regenerated, taint scan 0 failing. Priorities: boots and plays in the browser, everything readable, faces/sprites/pictures correct, sound working. Voices: placeholders plus the practice pack only, the user records later. Publish to andrewnakas/marioparty3-cleanroom plus GitHub Pages once playable, keep improving, keep STATUS.md current, and respect the disk and memory budget (C: is nearly full, work on D:; other agents are building on this machine, use -j2)."
