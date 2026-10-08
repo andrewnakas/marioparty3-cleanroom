@@ -231,8 +231,11 @@ def build(retail, hooks=()):
             n += len(new)
             e["raw"] = images.rebuild(e["raw"], new)
             e["comp"] = None
-    for d, f in images.KEPT_2BIT:            # kept as it is, but stored by our own encoder like everything else
-        dirs[d][f]["comp"] = None
+    # kept files (motion, geometry, layout) are stored by our own encoder too: the retail encoder's token walk
+    # through long zero runs is the same in every file and would repeat inside our image
+    for files in dirs:
+        for e in files:
+            e["comp"] = None
     b = romtool.Builder(retail)
     b.put_mainfs(dirs)
     if have_pic and not _off("bg"):
