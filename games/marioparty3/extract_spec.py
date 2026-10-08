@@ -17,9 +17,25 @@ from . import audio, hvqfs, images, mainfs
 SPEC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "spec")
 
 
+def grid(rgba, n):
+    """n x n colour grid; a cell's colour is the mean of its visible pixels (weighted by alpha), so the colour
+    key behind a sprite does not tint it. Alpha is the plain mean."""
+    h, w = rgba.shape[:2]
+    out = []
+    for gy in range(n):
+        for gx in range(n):
+            y0, y1 = gy * h // n, max(gy * h // n + 1, (gy + 1) * h // n)
+            x0, x1 = gx * w // n, max(gx * w // n + 1, (gx + 1) * w // n)
+            c = rgba[y0:y1, x0:x1].reshape(-1, 4).astype(np.float64)
+            wt = c[:, 3:4]
+            rgb = (c[:, :3] * wt).sum(0) / wt.sum() if wt.sum() > 0 else c[:, :3].mean(0)
+            out.append([int(round(v)) for v in rgb] + [int(round(c[:, 3].mean()))])
+    return out
+
+
 def fact(im):
     n = 16 if max(im.w, im.h) >= 128 else 4
-    d = {"w": im.w, "h": im.h, "mode": im.mode, "grid": S.grid(im.rgba, n)}
+    d = {"w": im.w, "h": im.h, "mode": im.mode, "grid": grid(im.rgba, n)}
     a = im.rgba[..., 3]
     if im.mode in ("i", "ia") or (a < 250).any():
         d["alpha2"] = S.alpha2(a)
