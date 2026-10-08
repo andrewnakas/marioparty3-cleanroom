@@ -14,6 +14,7 @@ and a map of where the two images differ, which must stay inside the regenerated
 Kept facts are listed, not scanned.
 """
 import hashlib
+import struct
 import sys
 
 import numpy as np
@@ -157,10 +158,16 @@ def main(argv):
     def stored():
         for d, files in enumerate(rdirs):
             for f, e in enumerate(files):
-                if images.kind(e["raw"]) in ("pack", "raw32", "ci8", "hvqhead") or (d, f) in stills:
+                k = images.kind(e["raw"])
+                if k == "pack" and e["kind"] != 0:
+                    # payload only: the header + entry table + tile map are kept layout (blanked in the clean
+                    # image too, see _without_pack_tables)
+                    _, used = mainfs.decompress(e["kind"], e["comp"] + bytes(64), 0, struct.unpack_from(">I", e["raw"], 8)[0])
+                    yield f"{d}/{f}", e["comp"][used:]
+                elif k in ("pack", "raw32", "ci8", "hvqhead") or (d, f) in stills:
                     yield f"{d}/{f}", e["comp"]
         for b, files in enumerate(hvqfs.read(retail)):
-            yield f"bg/{b}", b"".join(files[1:])
+            yield f"bg/{b}", files[1][hvqfs.HEAD_KEEP:] + b"".join(files[2:])      # first 0x2C header bytes: kept layout
         for w in rw:
             yield w["name"], bytes(retail[w["pos"]:w["pos"] + w["len"]])
 

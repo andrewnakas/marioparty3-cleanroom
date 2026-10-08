@@ -104,6 +104,73 @@ for _f, _t, _th in ((144, "FINISH", 3.2), (146, "TIME UP", 3.2), (148, "GOAL", 3
     T[f"12/{_f + 1}/p0"] = (_t, *_WHITE, {"th": _th, "pad": 2})
 
 
+# ------------------------------------------------------------------ common UI (dir 0)
+over, cutout, star_pts = M.over, M.cutout, M.star_pts
+_GREEN = ([150, 255, 60], [40, 200, 20], [40, 10, 110])
+for _i, _t in enumerate(["O", "1", "2", "3", "4", "5", "6", "7", "8", "9", "'", '"', "m", "cm"]):
+    T[f"0/50/p{_i}"] = (_t, *_GREEN, {"th": 1.0, "pad": 0})
+
+
+def _button(c, dark, text=None, tc=W):
+    b = brief(c, E((0.5, 0.5), (0.5, 0.5), c=dark), E((0.5, 0.5), (0.42, 0.42), c=c), E((0.38, 0.32), (0.14, 0.08), c=[min(255, v + 80) for v in c], rot=-30))
+    return over(b, text, tc, tc, dark, (0.2, 0.16, 0.8, 0.86), th=0.7, pad=0, edge_px=0.0) if text else b
+
+
+def _cbutton(pts):
+    y, d = [250, 196, 20], [150, 90, 0]
+    return brief(y, E((0.5, 0.5), (0.5, 0.5), c=d), E((0.5, 0.5), (0.42, 0.42), c=y), P(pts, d))
+
+
+B["0/52/p0"] = _button([40, 80, 230], [10, 20, 120], "A")
+B["0/52/p1"] = _button([30, 170, 60], [0, 80, 20], "B")
+B["0/52/p2"] = _cbutton([(0.5, 0.24), (0.76, 0.66), (0.24, 0.66)])
+B["0/52/p3"] = _cbutton([(0.76, 0.5), (0.34, 0.76), (0.34, 0.24)])
+B["0/52/p4"] = _cbutton([(0.24, 0.5), (0.66, 0.76), (0.66, 0.24)])
+B["0/52/p5"] = _cbutton([(0.5, 0.76), (0.76, 0.34), (0.24, 0.34)])
+B["0/52/p6"] = over(brief([150, 150, 160], R(0, 0, 1, 0.08, [70, 70, 80]), R(0, 0.92, 1, 1, [70, 70, 80]), R(0, 0, 0.08, 1, [70, 70, 80]), R(0.92, 0, 1, 1, [70, 70, 80])),
+                    "Z", W, W, [50, 50, 60], (0.2, 0.16, 0.8, 0.86), th=0.7, pad=0, edge_px=0.0)
+B["0/52/p7"] = brief([120, 120, 130], E((0.5, 0.78), (0.4, 0.2), c=[70, 70, 80]), R(0.42, 0.3, 0.58, 0.8, [200, 200, 210]),
+                     E((0.5, 0.26), (0.26, 0.2), c=[230, 230, 236]), E((0.5, 0.26), (0.14, 0.1), c=[150, 150, 160]))
+B["0/52/p8"] = brief(M.GOLD, E((0.5, 0.5), (0.34, 0.48), c=M.GOLD_D), E((0.5, 0.5), (0.26, 0.4), c=M.GOLD), R(0.46, 0.26, 0.54, 0.74, M.GOLD_D))
+B["0/52/p9"] = brief(M.GOLD, P(star_pts(0.5, 0.54, 0.5), M.GOLD_D), P(star_pts(0.5, 0.54, 0.4), M.GOLD), E((0.43, 0.5), (0.03, 0.08), c=K), E((0.57, 0.5), (0.03, 0.08), c=K))
+B["0/52/p10"] = _button([226, 40, 40], [120, 0, 0], "S")
+B["0/52/p11"] = over(brief([150, 150, 160], R(0, 0, 1, 0.08, [70, 70, 80]), R(0, 0.92, 1, 1, [70, 70, 80]), R(0, 0, 0.08, 1, [70, 70, 80]), R(0.92, 0, 1, 1, [70, 70, 80])),
+                     "R", W, W, [50, 50, 60], (0.2, 0.16, 0.8, 0.86), th=0.7, pad=0, edge_px=0.0)
+
+
+def _quit(w, h, d, alpha):
+    out = np.zeros((h, w, 4), np.float32)
+    g = typeset(int(w * 0.62), h, "QUIT", [170, 255, 80], [40, 190, 20], [20, 40, 10], th=1.5, pad=1)
+    out[:, :g.shape[1]] = g
+    r = typeset(h, h - 2, "R", W, W, [50, 50, 60], th=1.2, pad=1)
+    x0 = int(w * 0.66)
+    out[1:h - 1, x0:x0 + h, :3] = [150, 150, 160]
+    out[1:h - 1, x0:x0 + h, 3] = 255
+    a = r[..., 3:] / 255
+    out[1:h - 1, x0:x0 + h, :3] = out[1:h - 1, x0:x0 + h, :3] * (1 - a) + r[..., :3] * a
+    out[..., 3] = np.where(out[..., 3] >= 96, 255, 0)
+    return out
+
+
+B["0/148/p0"] = _quit
+
+
+# ------------------------------------------------------------------ per-directory modules (briefs_*.py: B and T dicts)
+import glob as _glob
+import importlib as _importlib
+
+for _p in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "briefs_*.py"))):
+    try:
+        _mod = _importlib.import_module("." + os.path.basename(_p)[:-3], __package__)
+    except Exception as _err:      # a batch being edited must not break the dev sheets of the others
+        if not os.environ.get("MP3_BRIEFS_LENIENT"):
+            raise
+        print(f"briefs: skipped {os.path.basename(_p)}: {_err!r}", file=sys.stderr)
+        continue
+    B.update(getattr(_mod, "B", {}))
+    T.update(getattr(_mod, "T", {}))
+
+
 # ------------------------------------------------------------------ render
 
 # MP3 images that are the same picture as one already briefed for Mario Party 1 (same size and format, coarse

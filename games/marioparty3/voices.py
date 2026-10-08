@@ -5,8 +5,8 @@ and the practice pack for recording real takes.
     python -m games.marioparty3.voices practice            # DIRTY: practice pack in D:/n64work/mp3work/practice
                                                           # (needs voice_scan's clips; personal use, never published)
 
-Slots are named <table>_<sound>.wave in voice_lines.json ("t3_0_336.wave" = sound 336 of the first effect table).
-"_same" lists slots of the second table that hold the same line: they reuse the first one's performance.
+Slots are named sbf_<sound>.wave in voice_lines.json ("sbf_336.wave" = sound 336 of the SBF0 effect bank).
+"_same" lists slots that hold the same line as another: they reuse that one's performance.
 """
 import json
 import os
@@ -29,9 +29,9 @@ def _spec():
 
 
 def _slot(name):
-    """'t3_0_336.wave' -> spec key 't3_0/336'."""
+    """'sbf_336.wave' -> spec key 'sbf/336'."""
     stem = name[:-5]
-    return stem[:4] + "/" + stem[5:]
+    return stem[:3] + "/" + stem[4:]
 
 
 def _lines():
@@ -46,8 +46,8 @@ def build(only=None):
 
 
 def hook(key, d):
-    """Generator hook: int16 samples for a voice slot ('snd/t3_0/336'), else None."""
-    if not key.startswith("snd/t3_"):
+    """Generator hook: int16 samples for a voice slot ('snd/sbf/336'), else None."""
+    if not key.startswith("snd/sbf/"):
         return None
     stem = key[4:].replace("/", "_")
     lines, same = _lines()

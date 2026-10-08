@@ -357,6 +357,19 @@ def glyph_levels(raw, start):
     return np.stack([a >> 4, a & 15], 1).ravel()
 
 
+def glyph_colours(raw):
+    """The sheet's text colour table (RGBA5551 words between the first two section offsets) cut to 16 levels per
+    channel, like every other 16-bit picture."""
+    a, b = struct.unpack_from(">II", raw, 0)
+    w = np.frombuffer(raw[a:a + (b - a) // 2 * 2], ">u2").astype(np.uint16)
+    out = np.uint16(0)
+    for sh in (11, 6, 1):
+        lv = ((w >> sh) & 31) >> 1
+        out = out | (((lv << 1) | (lv >> 3)) << sh)
+    out = (out | (w & 1)).astype(">u2")
+    return raw[:a] + out.tobytes() + raw[a + len(out) * 2:]
+
+
 def glyph_rebuild(raw, start, levels2):
     """levels2: 2-bit level per nibble (the kept outline) -> file with 4-bit glyphs at levels 0/5/10/15."""
     v = (np.asarray(levels2, np.uint8) * 5).reshape(-1, 2)

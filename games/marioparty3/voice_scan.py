@@ -31,7 +31,7 @@ def main(argv):
         model = WhisperModel("base.en", device="cpu", compute_type="int8")
     rows = []
     for w in audio.waves(rom):
-        if not w["name"].startswith("t3"):
+        if not w["name"].startswith("sbf"):
             continue
         pcm = audio.decode(rom, w)
         rate = w["rate"]

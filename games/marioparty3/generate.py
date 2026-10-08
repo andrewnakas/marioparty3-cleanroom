@@ -23,7 +23,7 @@ LEVELS = np.array([0, 85, 170, 255], np.float32)
 
 # Pictures whose default rendering still repeated a retail window run by chance (taint report feedback: one bit per
 # picture, no retail content): rendered with 8 levels per channel instead of 16.
-COARSE = {"8/14/p0", "31/15/p1"}
+COARSE = {"24/5/p0", "24/5/p3", "24/5/p5", "24/5/p11", "83/3/p0"}
 
 
 def _blur(a):
@@ -218,7 +218,7 @@ def build(retail, hooks=()):
             if (d, f) in images.GLYPH4 and not _off("glyph"):
                 g = tex[f"{d}/{f}/glyphs"]
                 lv = (G.unpack_alpha2(g["alpha2"], g["w"], 1) / 85).astype(np.uint8).ravel()
-                e["raw"], e["comp"] = images.glyph_rebuild(e["raw"], images.GLYPH4[(d, f)], lv), None
+                e["raw"], e["comp"] = images.glyph_rebuild(images.glyph_colours(e["raw"]), images.GLYPH4[(d, f)], lv), None
                 n += 1
                 continue
             if not _selected(d, f, images.kind(e["raw"])):
