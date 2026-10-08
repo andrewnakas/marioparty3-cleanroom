@@ -36,6 +36,14 @@
   runs repeats in every file); the dialog font's colour table is cut to 16 levels; the first 0x2C bytes of each
   HVQ-MPS header are kept layout; the colour grid of a sprite is alpha-weighted (no colour-key tint).
 - A typed copyright line an agent put on the title card was replaced: we do not print others' notices on our art.
+- Found after the first publish: FORM bitmaps of format 0x228 keep a second copy of the indices in the same
+  chunk; the first published ROM still had 6 retail copies (32x32, 4-bit, under our palette). Fixed in
+  `images._form_rebuild`, republished the same hour. Taint now also scans every stored BMP1 chunk; bitmaps of at
+  most 4 palette entries are exempt (they are their own kept 2-bit outline). **User call**: say if those should
+  be altered anyway.
+- Voices: 44 lines in `voice_lines.json` (announcer, mario, luigi, peach, wario, waluigi, daisy); Yoshi and DK only
+  make noises (resynthesised like other effects). "Good choice!" speakers, "Mario Party Three!" and "Miss!" are
+  guesses (marked).
 - Kept as facts: program, text banks (0x1209850..0x128CC60, six languages), model geometry/motion (FORM without
   bitmaps/palettes, MTNX), layout tables, background metadata, sequences, envelopes, key maps, loop points.
 - ROM-DB: the core's "Mario Party 3 (U) [f1]" hack slot is pointed at our ROM's MD5 (EEPROM 16 KB, rumble).
@@ -49,11 +57,13 @@
 
 ## Next
 1. Play deeper headless (board turn, mini-game) and fix what is unreadable there.
-2. Voices: placeholder TTS + practice pack (voice scan running).
+2. Voices done as placeholders; confirm guessed speakers by ear.
 3. Board backgrounds better than the blur.
 4. Second look at briefs the agents flagged as weak (see "For the morning").
 
 ## For the morning
+- To record voices: `D:/n64work/mp3work/practice/` (SCRIPT.txt + `practice_<who>_call_and_response.wav` for
+  announcer, mario, luigi, peach, wario, waluigi, daisy). Lines marked (?) need a listen to confirm who speaks.
 - Open https://andrewnakas.github.io/marioparty3-cleanroom/ : Enter = Start, X = A, arrows = stick. First load
   downloads a 32 MB ROM. Tell me what looks wrong first.
 - Known rough spots: board / mini-game backgrounds and instruction pictures are a blur; sprite animations of

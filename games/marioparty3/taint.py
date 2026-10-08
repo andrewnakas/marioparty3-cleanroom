@@ -124,6 +124,25 @@ def main(argv):
     # 1. textures
     bad = list(_scan("textures", _image_streams(rdirs), _image_streams(cdirs), results))
 
+    # 1b. every byte of every bitmap chunk of the model files (index data as stored, including the extra copies
+    # that format 0x228 keeps after the first bitmap, which the decoded-texture scan does not see)
+    def chunks(dirs):
+        for d, files in enumerate(dirs):
+            for f, e in enumerate(files):
+                if e["raw"][:4] == b"FORM":
+                    pals = images._form_parse(e["raw"])[1]
+                    for i, (tag, o, n) in enumerate(images.form_chunks(e["raw"])):
+                        if tag != b"BMP1":
+                            continue
+                        b = images._bmp_info(e["raw"], o, n)
+                        # a bitmap of at most 4 palette entries holds 2 bits per pixel: it is its own kept 2-bit
+                        # outline (a kept fact), so its indices are the same by construction
+                        if b["pal"] is not None and b["pal"] in pals and pals[b["pal"]][1] <= 4:
+                            continue
+                        yield f"{d}/{f}/chunk{i}", e["raw"][o:o + n]
+
+    bad += _scan("bitmap chunks", chunks(rdirs), chunks(cdirs), results)
+
     # 2. pictures
     def retail_pics():
         for b in range(len(hvqfs.read(retail))):
@@ -216,6 +235,7 @@ def main(argv):
               "text banks, model geometry and motion "
               f"({kept['form']} FORM files without their bitmaps and palettes, {kept['mtnx']} MTNX motions, "
               f"{kept['other'] - len(images.GLYPH4)} other layout/path files), "
+              "model bitmaps of at most 4 palette entries (they are their own 2-bit outline), "
               "background metadata (tile counts, camera), sequences, envelopes, key maps, loop points, effect tables."]
     failing = len(bad) + len(stray) + audio_stray + same_samples + same_images
     lines += ["", f"**{failing} failing.**"]
