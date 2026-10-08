@@ -209,7 +209,7 @@ def _bmp_info(raw, o, n):
     if fmt in (0x128, 0x228):
         pal = struct.unpack_from(">H", raw, o + 9)[0]
         size = struct.unpack_from(">H", raw, o + 0xF)[0]
-        return dict(gidx=gidx, fmt=fmt, w=w, h=h, pal=pal, size=size, data=o + 0x11, bpp=size * 8 // max(1, w * h))
+        return dict(gidx=gidx, fmt=fmt, w=w, h=h, pal=pal, size=size, data=o + 0x11, bpp=size * 8 // max(1, w * h), end=o + n)
     size = struct.unpack_from(">H", raw, o + 0xB)[0]
     return dict(gidx=gidx, fmt=fmt, w=w, h=h, pal=None, size=size, data=o + 0xD, bpp=raw[o + 4])
 
@@ -304,6 +304,19 @@ def _form_rebuild(raw, new):
         out[po:po + cnt * 4] = full.tobytes()
         for (key, b), idx in zip(members, idxs):
             out[b["data"]:b["data"] + b["size"]] = pack_idx(idx, b["bpp"], b["size"])
+            # format 0x228 carries further copies of the bitmap in the same chunk (14-byte sub-header: two bytes,
+            # w, h, palette, u32 0, u16 size; then the indices): they get the same new picture
+            o, end = b["data"] + b["size"], b["end"]
+            while b["fmt"] == 0x228 and o + 14 <= end:
+                w2, h2 = struct.unpack_from(">HH", raw, o + 2)
+                size2 = struct.unpack_from(">H", raw, o + 12)[0]
+                if size2 == 0 or o + 14 + size2 > end:
+                    break
+                if (w2, h2, size2) == (b["w"], b["h"], b["size"]):
+                    out[o + 14:o + 14 + size2] = pack_idx(idx, b["bpp"], size2)
+                else:
+                    out[o + 14:o + 14 + size2] = bytes(size2)
+                o += 14 + size2
     # palettes that no bitmap uses still hold retail colours: blank them
     used = set(groups)
     for gidx, (po, cnt, bpc) in pals.items():

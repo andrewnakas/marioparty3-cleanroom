@@ -1,0 +1,240 @@
+{
+ "_doc": "Spoken lines for the voice slots in the SBF0 effect bank (words as heard by a speech recogniser in the dirty room, tidied by hand). who = which voice performs it; 'guess' marks slots whose speaker or wording was inferred. Placeholders are Piper TTS; real takes come from the practice pack.",
+ "_characters": {
+  "announcer": {
+   "tts": {
+    "model": "en_US-ryan-high",
+    "semitones": 2.0,
+    "length": 0.95
+   }
+  },
+  "mario": {
+   "tts": {
+    "model": "en_US-joe-medium",
+    "semitones": 5.0,
+    "length": 1.0
+   }
+  },
+  "luigi": {
+   "tts": {
+    "model": "en_US-ryan-high",
+    "semitones": 4.0,
+    "length": 1.0
+   }
+  },
+  "peach": {
+   "tts": {
+    "model": "en_US-amy-medium",
+    "semitones": 3.0,
+    "length": 1.0
+   }
+  },
+  "wario": {
+   "tts": {
+    "model": "en_US-joe-medium",
+    "semitones": -3.0,
+    "length": 1.05
+   }
+  },
+  "waluigi": {
+   "tts": {
+    "model": "en_US-ryan-high",
+    "semitones": 1.0,
+    "length": 1.12
+   }
+  },
+  "daisy": {
+   "tts": {
+    "model": "en_US-amy-medium",
+    "semitones": 5.0,
+    "length": 0.95
+   }
+  }
+ },
+ "_same": {},
+ "sbf_209.wave": {
+  "who": "announcer",
+  "text": "Mario Party Three!",
+  "guess": true
+ },
+ "sbf_210.wave": {
+  "who": "announcer",
+  "text": "Mario Party Three!",
+  "guess": true
+ },
+ "sbf_211.wave": {
+  "who": "announcer",
+  "text": "Game over!"
+ },
+ "sbf_212.wave": {
+  "who": "announcer",
+  "text": "Start!"
+ },
+ "sbf_213.wave": {
+  "who": "announcer",
+  "text": "New record!"
+ },
+ "sbf_214.wave": {
+  "who": "announcer",
+  "text": "Finish!"
+ },
+ "sbf_215.wave": {
+  "who": "announcer",
+  "text": "Miss!",
+  "guess": true
+ },
+ "sbf_216.wave": {
+  "who": "announcer",
+  "text": "Draw!"
+ },
+ "sbf_228.wave": {
+  "who": "mario",
+  "text": "Woohoo! I got it!"
+ },
+ "sbf_229.wave": {
+  "who": "mario",
+  "text": "Oh, I lost!"
+ },
+ "sbf_230.wave": {
+  "who": "mario",
+  "text": "I'm the best!"
+ },
+ "sbf_231.wave": {
+  "who": "mario",
+  "text": "Yeah! Mario is the superstar!"
+ },
+ "sbf_233.wave": {
+  "who": "mario",
+  "text": "Yeah! Mario is the winner!"
+ },
+ "sbf_235.wave": {
+  "who": "luigi",
+  "text": "Ha ha! I got it!"
+ },
+ "sbf_236.wave": {
+  "who": "luigi",
+  "text": "Oh, I lost!"
+ },
+ "sbf_237.wave": {
+  "who": "luigi",
+  "text": "I'm the best!"
+ },
+ "sbf_238.wave": {
+  "who": "luigi",
+  "text": "Yeah! Luigi is the superstar!"
+ },
+ "sbf_240.wave": {
+  "who": "luigi",
+  "text": "Yeah! Luigi is the winner!"
+ },
+ "sbf_242.wave": {
+  "who": "peach",
+  "text": "Yeah, I got it!"
+ },
+ "sbf_243.wave": {
+  "who": "peach",
+  "text": "Oh, I lost!"
+ },
+ "sbf_244.wave": {
+  "who": "peach",
+  "text": "I'm the best!"
+ },
+ "sbf_245.wave": {
+  "who": "peach",
+  "text": "Yeah! Peach is the superstar!"
+ },
+ "sbf_247.wave": {
+  "who": "peach",
+  "text": "Yeah! Peach is the winner!"
+ },
+ "sbf_257.wave": {
+  "who": "wario",
+  "text": "Ha ha ha! I got it!"
+ },
+ "sbf_258.wave": {
+  "who": "wario",
+  "text": "Oh, I lost!"
+ },
+ "sbf_259.wave": {
+  "who": "wario",
+  "text": "I'm the best!"
+ },
+ "sbf_260.wave": {
+  "who": "wario",
+  "text": "Yeah! Wario is the superstar!"
+ },
+ "sbf_262.wave": {
+  "who": "wario",
+  "text": "Yeah! Wario is the winner!"
+ },
+ "sbf_264.wave": {
+  "who": "waluigi",
+  "text": "Ha ha ha, I got it!"
+ },
+ "sbf_265.wave": {
+  "who": "waluigi",
+  "text": "Oh, I lost!"
+ },
+ "sbf_266.wave": {
+  "who": "waluigi",
+  "text": "I'm the best!"
+ },
+ "sbf_267.wave": {
+  "who": "waluigi",
+  "text": "Yeah! Waluigi is the superstar!"
+ },
+ "sbf_269.wave": {
+  "who": "waluigi",
+  "text": "Yeah! Waluigi is the winner!"
+ },
+ "sbf_271.wave": {
+  "who": "daisy",
+  "text": "Yay! I got it!"
+ },
+ "sbf_272.wave": {
+  "who": "daisy",
+  "text": "Oh, I lost!"
+ },
+ "sbf_273.wave": {
+  "who": "daisy",
+  "text": "I'm the best!"
+ },
+ "sbf_274.wave": {
+  "who": "daisy",
+  "text": "Yeah! Daisy is the superstar!"
+ },
+ "sbf_276.wave": {
+  "who": "daisy",
+  "text": "Yeah! Daisy is the winner!"
+ },
+ "sbf_293.wave": {
+  "who": "mario",
+  "text": "Good choice!",
+  "guess": true
+ },
+ "sbf_294.wave": {
+  "who": "luigi",
+  "text": "Good choice!",
+  "guess": true
+ },
+ "sbf_295.wave": {
+  "who": "peach",
+  "text": "Good choice!",
+  "guess": true
+ },
+ "sbf_296.wave": {
+  "who": "wario",
+  "text": "Good choice!",
+  "guess": true
+ },
+ "sbf_297.wave": {
+  "who": "waluigi",
+  "text": "Good choice!",
+  "guess": true
+ },
+ "sbf_298.wave": {
+  "who": "daisy",
+  "text": "Good choice!",
+  "guess": true
+ }
+}

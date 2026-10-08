@@ -5,7 +5,7 @@ __pycache__/
 *.v64
 *.zip
 baserom*
-games/marioparty/native/*.pdb
-games/marioparty/native/*.lib
+games/marioparty3/native/*.pdb
+games/marioparty3/native/*.lib
 __pycache__/
-games/marioparty/voices/_raw/
+games/marioparty3/voices/_raw/
