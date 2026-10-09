@@ -5,8 +5,14 @@
   site on `gh-pages`, Pages status "built", ROM served). First publish = build with taint **0 failing**.
 - Clean ROM = retail program + every picture and sound regenerated: 5570 MainFS images, 35 backgrounds (4037
   tiles), 78 stills, 782 waves. 32 MB. Our picture decoder replaces `lib/hvq`.
-- Checked in headless Edge: boots, intro text, title card, file select, name entry, mode select.
-  NOT yet checked: a board turn, a mini-game, sound level (headless runs are muted).
+- Checked in headless Edge (evening): boot, intro, title, file select (COPY/ERASE/NEW), name entry keyboard,
+  SELECT A MODE (Story/Party panels), Party Mode hub (Millennium Star dialog, board names), star lift to the
+  Battle Royal lobby (Toad), and a mini-game instruction screen ("Messy Memory": portraits, GAME RULES / NEXT /
+  START, rules text all readable; its preview picture is the blurred still). Sound: the page meter (read before the
+  mute) shows output at 28 points of a 14-minute run; nobody has listened yet.
+  NOT yet checked: a board turn itself, a mini-game being played. Headless runs on this machine are ~5x slower
+  than real time and twice got killed for low memory: hold keys 1.5 s, and do not start long runs while other
+  sessions build.
 - Briefs (our own drawings / typeset text), about 2900 entries in `briefs*.py`, `faces.py`, `icons.py`:
   faces of the 8 players (all expressions), clothes/emblems, supporting cast faces, menu font sprites, dialog font
   (from its 2-bit outline), HUD digits, board UI (dir 19), title card + logo lettering, file/mode select headings,
@@ -56,7 +62,7 @@
   `taint.py`, `look.py` (boot + contact sheet), `atlas.py` (retail|clean sheets).
 
 ## Next
-1. Play deeper headless (board turn, mini-game) and fix what is unreadable there.
+1. Play a board turn and a mini-game headless when memory allows (path: Start, A x ~20, ArrowLeft 3 s on the hub, then A).
 2. Voices done as placeholders; confirm guessed speakers by ear.
 3. Board backgrounds better than the blur.
 4. Second look at briefs the agents flagged as weak (see "For the morning").
