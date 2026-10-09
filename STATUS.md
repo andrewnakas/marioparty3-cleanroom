@@ -10,7 +10,12 @@
   Battle Royal lobby (Toad), and a mini-game instruction screen ("Messy Memory": portraits, GAME RULES / NEXT /
   START, rules text all readable; its preview picture is the blurred still). Sound: the page meter (read before the
   mute) shows output at 28 points of a 14-minute run; nobody has listened yet.
-  NOT yet checked: a board turn itself, a mini-game being played. Headless runs on this machine are ~5x slower
+  Night run (sheet `D:/n64work/mp3work/sheets/play_board.png`): character select, handicap, turn count, the
+  turn-order dice, **board turns on Chilly Waters** (HUD ranks, portraits, star/coin counts, dice, direction
+  arrows, button help), the mini-game roulette and the "Cheep Cheep Chase" instruction screen: all readable.
+  NOT yet checked: a mini-game being played (the run pressed A; that screen needs Start).
+  One run showed a white page with a crashed-frame icon after the star lift; the next identical run passed, so
+  that was the headless browser, not the ROM. Headless runs on this machine are ~5x slower
   than real time and twice got killed for low memory: hold keys 1.5 s, and do not start long runs while other
   sessions build.
 - Briefs (our own drawings / typeset text), about 2900 entries in `briefs*.py`, `faces.py`, `icons.py`:
