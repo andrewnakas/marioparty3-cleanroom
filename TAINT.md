@@ -1,6 +1,6 @@
 # Taint report
 
-clean ROM sha1 `ae9f0821f9eedc30442ff1d67e5b6ee8f19aecfa` (32 MB) vs the retail USA ROM.
+clean ROM sha1 `f2738a96107830bff3d9f509997de5c14ee2ba4c` (32 MB) vs the retail USA ROM.
 Window 16 B, failing run >= 32 B.
 
 | scan | retail windows indexed | clean streams with coincidences | longest shared run | failing |
@@ -16,7 +16,7 @@ Window 16 B, failing run >= 32 B.
 | header checksum | 8 | 8 |
 | picture decoder (ours, over lib/hvq) + entry jump | 13072 | 1130 |
 | HVQ table setup (returns at once) | 8 | 7 |
-| MainFS | 13310512 | 13110528 |
+| MainFS | 13310512 | 13109809 |
 | backgrounds | 6246368 | 5948129 |
 | audio (samples, codebooks, loop states) | 6798912 | 5972819 |
 | tail (free in retail) | 1058176 | 0 |

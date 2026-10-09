@@ -105,7 +105,7 @@ def dark_hill(c):
 
 B["16/0/p0"] = _title(("luigi", "peach", "daisy", "waluigi", "mario", "yoshi", "dk", "wario"),
                       ([40, 130, 250], [170, 226, 255]), [70, 200, 60], (0.82, 0.14))
-B["16/1/p0"] = _title(("wario", "daisy", "peach", "dk", "yoshi", "luigi", "mario", "waluigi"),
+B["16/1/p0"] = _title(("luigi", "peach", "daisy", "waluigi", "mario", "yoshi", "dk", "wario"),      # same layout: the game cross-fades the two
                       ([90, 80, 230], [255, 200, 170]), [60, 180, 80], (0.2, 0.16))
 
 # ------------------------------------------------------------------ 17: flags, hand cursors, practice strips
